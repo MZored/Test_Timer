@@ -2,6 +2,7 @@ package com.example.mzored.timer;
 
 import android.content.Intent;
 import android.os.CountDownTimer;
+import android.os.PersistableBundle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -12,6 +13,7 @@ public class Timer extends AppCompatActivity {
 
     long timer_to = 1000025; //досчитает до 1000
     long timer_step = 1000;
+    String TextString;
     TextView TimerText;
     Button StartButton;
     Button StopButton;
@@ -43,6 +45,20 @@ public class Timer extends AppCompatActivity {
             }
         }
     };
+
+     /*
+     @Override
+    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
+        super.onSaveInstanceState(outState, outPersistentState);
+        TextString = TimerText.getText().toString();
+        outState.putString("TextString", TextString);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        TimerText.setText(savedInstanceState.getString("TextString"));
+    */
 
     private void start_tim() {
         StartButton.setVisibility(View.INVISIBLE);

@@ -274,7 +274,6 @@ public class NumbToStr {
     }
 
     public String convert(Long money) {
-        // если число отрицательное - делаем из него положительное
         if (money < 0) money *= -1;
         StringBuffer rezult = new StringBuffer();
         Long longPart = money.longValue();
