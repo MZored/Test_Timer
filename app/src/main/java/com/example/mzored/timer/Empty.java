@@ -7,14 +7,24 @@ import android.os.Bundle;
 
 public class Empty extends AppCompatActivity {
 
+    long millisUntilFinished = 2000;
+    static CountDownTimer timer;
+    static final String TIMERKEY = "TIMER";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_empty);
+    }
 
-        CountDownTimer timer = new CountDownTimer(2000, 1000) {
+    @Override
+    public void onResume() {
+        super.onResume();
+         timer = new CountDownTimer(millisUntilFinished, 10) {
             @Override
-            public void onTick(long millisUntilFinished) {}
+            public void onTick(long milliSec) {
+                millisUntilFinished = milliSec;
+            }
 
             public void onFinish() {
                 Intent intent = new Intent(getApplicationContext(), Timer.class);
@@ -22,5 +32,22 @@ public class Empty extends AppCompatActivity {
                 finish();
             }
         }.start();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        timer.cancel();
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putLong(TIMERKEY, millisUntilFinished);
+    }
+
+    @Override
+    public void onRestoreInstanceState(Bundle savedInstanceState) {
+        millisUntilFinished = savedInstanceState.getLong(TIMERKEY);
     }
 }

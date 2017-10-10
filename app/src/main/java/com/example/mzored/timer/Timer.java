@@ -13,6 +13,8 @@ public class Timer extends AppCompatActivity {
 
     long timer_to = 1000025; //досчитает до 1000
     long timer_step = 1000;
+    long a;
+    boolean timer_act;
     String TextString;
     TextView TimerText;
     Button StartButton;
@@ -32,6 +34,20 @@ public class Timer extends AppCompatActivity {
         StopButton.setOnClickListener(onClickListener);
     }
 
+    @Override
+    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
+        super.onSaveInstanceState(outState, outPersistentState);
+        outState.putBoolean("timer_act", timer_act);
+        outState.putLong("a", a);
+    }
+
+    @Override
+    public void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        timer_act = savedInstanceState.getBoolean("timer_act");
+        a = savedInstanceState.getLong("a");
+    }
+
     View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
@@ -46,23 +62,11 @@ public class Timer extends AppCompatActivity {
         }
     };
 
-     /*
-     @Override
-    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
-        super.onSaveInstanceState(outState, outPersistentState);
-        TextString = TimerText.getText().toString();
-        outState.putString("TextString", TextString);
-    }
-
-    @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-        TimerText.setText(savedInstanceState.getString("TextString"));
-    */
-
     private void start_tim() {
+        timer_act = true;
         StartButton.setVisibility(View.INVISIBLE);
         StopButton.setVisibility(View.VISIBLE);
+
         timer = new CountDownTimer(timer_to, timer_step) {
             @Override
             public void onTick(long millisUntilFinished) {
@@ -78,10 +82,22 @@ public class Timer extends AppCompatActivity {
     }
 
     private void stop_tim() {
-        if (timer != null)
-            timer.cancel();
-        timer = null;
+        timer_act = false;
         StopButton.setVisibility(View.INVISIBLE);
         StartButton.setVisibility(View.VISIBLE);
+        if (timer != null)
+            timer.cancel();
+    }
+
+    public void onResume() {
+        super.onResume();
+        if (timer_act)
+            start_tim();
+        else
+            stop_tim();
+    }
+
+    public void onPause() {
+        super.onPause();
     }
 }
