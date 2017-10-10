@@ -37,14 +37,14 @@ public class Timer extends AppCompatActivity {
     @Override
     public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
         super.onSaveInstanceState(outState, outPersistentState);
-        outState.putBoolean("timer_act", timer_act);
+        outState.putBoolean(getString(R.string.timer_act), timer_act);
         outState.putLong("a", a);
     }
 
     @Override
     public void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
-        timer_act = savedInstanceState.getBoolean("timer_act");
+        timer_act = savedInstanceState.getBoolean(getString(R.string.timer_act));
         a = savedInstanceState.getLong("a");
     }
 
