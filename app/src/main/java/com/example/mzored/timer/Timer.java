@@ -14,10 +14,10 @@ public class Timer extends AppCompatActivity {
     long timer_step = 1000;
     long a;
     boolean timer_act;
-    String TextString;
-    TextView TimerText;
-    Button StartButton;
-    Button StopButton;
+    String textString;
+    TextView timerText;
+    Button startButton;
+    Button stopButton;
     CountDownTimer timer;
 
     @Override
@@ -25,12 +25,12 @@ public class Timer extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timer);
 
-        TimerText = (TextView) findViewById(R.id.TimerText);
-        StartButton = (Button) findViewById(R.id.StartButton);
-        StopButton = (Button) findViewById(R.id.StopButton);
+        timerText = (TextView) findViewById(R.id.TimerText);
+        startButton = (Button) findViewById(R.id.StartButton);
+        stopButton = (Button) findViewById(R.id.StopButton);
 
-        StartButton.setOnClickListener(onClickListener);
-        StopButton.setOnClickListener(onClickListener);
+        startButton.setOnClickListener(onClickListener);
+        stopButton.setOnClickListener(onClickListener);
     }
 
     @Override
@@ -63,13 +63,14 @@ public class Timer extends AppCompatActivity {
 
     private void start_tim() {
         timer_act = true;
-        StartButton.setVisibility(View.INVISIBLE);
-        StopButton.setVisibility(View.VISIBLE);
+        startButton.setVisibility(View.INVISIBLE);
+        stopButton.setVisibility(View.VISIBLE);
 
         timer = new CountDownTimer(timer_to, timer_step) {
             @Override
             public void onTick(long millisUntilFinished) {
-                TimerText.setText(new NumbToStr().convert
+                a = millisUntilFinished;
+                timerText.setText(new NumbToStr().convert
                         (1 + (timer_to - millisUntilFinished) / timer_step));
             }
 
@@ -82,8 +83,8 @@ public class Timer extends AppCompatActivity {
 
     private void stop_tim() {
         timer_act = false;
-        StopButton.setVisibility(View.INVISIBLE);
-        StartButton.setVisibility(View.VISIBLE);
+        stopButton.setVisibility(View.INVISIBLE);
+        startButton.setVisibility(View.VISIBLE);
         if (timer != null)
             timer.cancel();
     }
