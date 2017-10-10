@@ -12,7 +12,7 @@ public class Timer extends AppCompatActivity {
 
     long timer_to = 1000025; //досчитает до 1000
     long timer_step = 1000;
-    long a;
+    long tmptime;
     boolean timer_act;
     String textString;
     TextView timerText;
@@ -37,14 +37,16 @@ public class Timer extends AppCompatActivity {
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putBoolean(getString(R.string.timer_act), timer_act);
-        outState.putLong("a", a);
+        outState.putLong(getString(R.string.tmptime), tmptime);
+        outState.putString(getString(R.string.just_text), timerText.getText().toString());
     }
 
     @Override
     public void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
         timer_act = savedInstanceState.getBoolean(getString(R.string.timer_act));
-        a = savedInstanceState.getLong("a");
+        tmptime = savedInstanceState.getLong(getString(R.string.tmptime));
+        textString = savedInstanceState.getString(getString(R.string.just_text), "");
     }
 
     View.OnClickListener onClickListener = new View.OnClickListener() {
@@ -69,7 +71,9 @@ public class Timer extends AppCompatActivity {
         timer = new CountDownTimer(timer_to, timer_step) {
             @Override
             public void onTick(long millisUntilFinished) {
-                a = millisUntilFinished;
+                if (tmptime != 0)
+                    millisUntilFinished = tmptime;
+                tmptime = millisUntilFinished;
                 timerText.setText(new NumbToStr().convert
                         (1 + (timer_to - millisUntilFinished) / timer_step));
             }
@@ -87,6 +91,7 @@ public class Timer extends AppCompatActivity {
         startButton.setVisibility(View.VISIBLE);
         if (timer != null)
             timer.cancel();
+        tmptime = 0;
     }
 
     public void onResume() {

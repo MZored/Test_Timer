@@ -3,4 +3,6 @@
     <string name="start">Start</string>
     <string name="stop">Stop</string>
     <string name="timer_act">timer_act</string>
+    <string name="tmptime">tmptime</string>
+    <string name="just_text">just_text</string>
 </resources>
