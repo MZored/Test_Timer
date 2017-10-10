@@ -2,7 +2,6 @@ package com.example.mzored.timer;
 
 import android.content.Intent;
 import android.os.CountDownTimer;
-import android.os.PersistableBundle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -35,8 +34,8 @@ public class Timer extends AppCompatActivity {
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
-        super.onSaveInstanceState(outState, outPersistentState);
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
         outState.putBoolean(getString(R.string.timer_act), timer_act);
         outState.putLong("a", a);
     }
@@ -99,5 +98,7 @@ public class Timer extends AppCompatActivity {
 
     public void onPause() {
         super.onPause();
+        if (timer != null)
+            timer.cancel();
     }
 }
